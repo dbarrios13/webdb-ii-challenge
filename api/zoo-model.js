@@ -19,21 +19,37 @@ module.exports = {
 }
 
 function find () {
-    return null
+    return db('zoos')
 }
 
 function findById (id) {
-    return null
+    return db('zoos')
+        .where({ id })
+        .first()
 }
 
-function add (name) {
-    return null
+function add (zoo) {
+    return db('zoos')
+        .insert(zoo)
+        .then(ids => {
+            const [id] = ids
+            return findById(id)
+        })
 }
 
 function update (id, changes) {
-    return null
+    return db('zoos')
+        .where({ id })
+        .update(changes)
+        .then(() => {
+            return db('zoos')
+                .where({ id })
+                .first()
+        })
 }
 
 function remove(id) {
-    return null
+    return db('zoos')
+        .where({ id })
+        .del()
 }
