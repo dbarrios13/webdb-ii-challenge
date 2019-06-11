@@ -32,9 +32,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const zoo = await db.add(req.body)
         if(req.body.name) {
-            res.status(201).json(zoo)
+            const zoo = await db.add(req.body)
+            res.status(201).json({zoo})
         } else {
             res.status(400).json({
                 message: 'Please provide name of the zoo'
@@ -49,18 +49,18 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        const zoo = await db.update(req.params.id, req.body)
-        if (zoo) {
-            if (req.body.name) {
+        if(req.body.name) {
+            const zoo = await db.update(req.params.id, req.body)            
+            if (zoo) {
                 res.status(200).json(zoo)
             } else {
-                res.status(400).json({
-                    message: 'Please provide name of the zoo'
+                res.status(404).json({
+                    message: 'The zoo with the specified ID does not exist'
                 })
             }
         } else {
-            res.status(404).json({
-                message: 'The zoo with the specified ID does not exist'
+            res.status(400).json({
+                message: 'Please provide name of the zoo'
             })
         }
     } catch (error) {

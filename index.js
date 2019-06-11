@@ -8,7 +8,7 @@ server.use(express.json());
 server.use(helmet());
 
 // endpoints here
-server.use('/zoo', zoo)
+server.use('/zoos', zoo)
 
 const port = 3300;
 server.listen(port, function() {
